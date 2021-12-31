@@ -1,4 +1,4 @@
-const Faker = require('faker')
+const { generateId } = require('../_utils/textTransform')
 
 module.exports = {
   description: 'Start Project (Just once)',
@@ -57,7 +57,7 @@ module.exports = {
       {
         type: 'add',
         path: '../../../.env',
-        data: { jwtToken: Faker.finance.bitcoinAddress(), jwtExpires: '7d' },
+        data: { jwtToken: generateId(), jwtExpires: '7d' },
         templateFile: './start/templates/env.hbs'
       },
 
