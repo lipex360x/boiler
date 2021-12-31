@@ -3,7 +3,7 @@ import { compare } from 'bcryptjs'
 import AppError from '@shared/errors/AppError'
 import { sign } from 'jsonwebtoken'
 
-import IUserRepository from '@modules/accounts/repositories/interfaces/IUserRepository'
+import IUsers from '@modules/accounts/repositories/interfaces/IUsers.interface'
 
 interface Request{
   email: string
@@ -22,14 +22,14 @@ interface Response {
 export default class SessionService {
   constructor (
     @inject('UserRepository')
-    private repository: IUserRepository
+    private repository: IUsers
   ) {}
 
   async execute ({ email, password }: Request): Promise<Response> {
     const user = await this.repository.findByEmail({ email })
 
     if (!user) throw new AppError('User or password incorrect')
-
+    
     const passwordMatch = await compare(password, user.password)
 
     if (!passwordMatch) throw new AppError('User or password incorrect')

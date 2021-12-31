@@ -10,7 +10,6 @@ const textToPascal = (word) => {
   return capitalize(pascal)
 }
 
-
 const generateId = (len) => {
   const dec2hex = dec.toString(16).padStart(2, "0")
 

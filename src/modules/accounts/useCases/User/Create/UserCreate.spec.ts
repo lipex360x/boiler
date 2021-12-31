@@ -1,15 +1,16 @@
 import AppError from '@shared/errors/AppError'
+import Faker from 'faker'
 
-import FakeUserRepository from '@modules/accounts/repositories/fakes/FakeUserRepository'
+import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsers.repository'
 import UserCreateService from './UserCreate.service'
 
-let fakeuserRepository: FakeUserRepository
+let fakeUsersRepository: FakeUsersRepository
 let userCreateService: UserCreateService
 
-describe('UserCreateService ', () => {
+describe('Accounts User Create', () => {
   beforeEach(() => {
-    fakeuserRepository = new FakeUserRepository()
-    userCreateService = new UserCreateService(fakeuserRepository)
+    fakeUsersRepository = new FakeUsersRepository()
+    userCreateService = new UserCreateService(fakeUsersRepository)
   })
 
   it('should be able to create a new user', async () => {
@@ -17,8 +18,6 @@ describe('UserCreateService ', () => {
       name: 'John Doe',
       email: 'john@mail.com',
       password: 'john1234',
-      driver_license: '12345678',
-      isAdmin: false
     }
     const createUser = await userCreateService.execute(user)
 
@@ -30,11 +29,9 @@ describe('UserCreateService ', () => {
       name: 'John Doe',
       email: 'john@mail.com',
       password: 'john1234',
-      driver_license: '12345678',
-      isAdmin: false
     }
 
-    await fakeuserRepository.create(user)
+    await fakeUsersRepository.create(user)
 
     await expect(
       userCreateService.execute(user)

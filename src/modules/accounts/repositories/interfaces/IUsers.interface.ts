@@ -1,13 +1,11 @@
-import User from '@modules/accounts/infra/typeorm/entities/User'
+import User from '@modules/accounts/infra/typeorm/entities/User.entity'
 
 export interface CreateProps {
   id?: string
   name: string
   email: string
   password: string,
-  driver_license: string,
   isAdmin?: boolean
-  avatar?: string
 }
 
 export interface FindByEmailProps {
@@ -18,7 +16,7 @@ export interface FindByIdProps {
   id: string
 }
 
-export default interface IUserRepository {
+export default interface IUser {
   create(data: CreateProps): Promise<User>
   findByEmail(data: FindByEmailProps): Promise<User>
   findById(data: FindByIdProps): Promise<User>

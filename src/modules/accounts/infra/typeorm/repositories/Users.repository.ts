@@ -1,17 +1,17 @@
 import { Repository, getRepository } from 'typeorm'
 
-import User from '@modules/accounts/infra/typeorm/entities/User'
-import IUserRepository, { CreateProps, FindByEmailProps, FindByIdProps } from '@modules/accounts/repositories/interfaces/IUserRepository'
+import User from '@modules/accounts/infra/typeorm/entities/User.entity'
+import IUsers, { CreateProps, FindByEmailProps, FindByIdProps } from '@modules/accounts/repositories/interfaces/IUsers.interface'
 
-export default class UserRepository implements IUserRepository {
+export default class UsersRepository implements IUsers {
   private repository: Repository<User>
 
   constructor () {
     this.repository = getRepository(User)
   }
 
-  async create ({ id, name, email, password, isAdmin, driver_license, avatar }: CreateProps): Promise<User> {
-    const user = this.repository.create({ id, name, email, password, isAdmin, driver_license, avatar })
+  async create ({ id, name, email, password, isAdmin }: CreateProps): Promise<User> {
+    const user = this.repository.create({ id, name, email, password, isAdmin })
 
     await this.repository.save(user)
 

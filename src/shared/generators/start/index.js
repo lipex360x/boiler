@@ -9,7 +9,7 @@ module.exports = {
       message: 'Project Name',
       validate: (value) => {
         if (!value) {
-          return 'Project Name is required'
+          return 'Value is required'
         }
         return true
       }
@@ -21,7 +21,7 @@ module.exports = {
       message: 'Postgres user name',
       validate: (value) => {
         if (!value) {
-          return 'Postgres user name is required'
+          return 'Value is required'
         }
         return true
       }
@@ -33,7 +33,7 @@ module.exports = {
       message: 'Postgres password',
       validate: (value) => {
         if (!value) {
-          return 'Postgres password is required'
+          return 'Value is required'
         }
         return true
       }
@@ -45,7 +45,7 @@ module.exports = {
       message: 'Postgres database name',
       validate: (value) => {
         if (!value) {
-          return 'Postgres database name is required'
+          return 'Value is required'
         }
         return true
       }
@@ -59,14 +59,7 @@ module.exports = {
         path: '../../../.env',
         data: { jwtToken: generateId(), jwtExpires: '7d' },
         templateFile: './start/templates/env.hbs'
-      },
-
-      {
-        type: 'add',
-        path: '../../../docker-compose.yml',
-        templateFile: './start/templates/docker-compose.hbs'
       }
-
     ]
 
     return action

@@ -27,13 +27,7 @@ export default class User {
     email: string
 
   @Column()
-    driver_license: string
-
-  @Column()
     isAdmin: boolean
-
-  @Column()
-    avatar?: string
 
   @CreateDateColumn()
     created_at: Date

@@ -1,19 +1,19 @@
 import AppError from '@shared/errors/AppError'
 import Faker from 'faker'
 
-import FakeUserRepository from '@modules/accounts/repositories/fakes/FakeUserRepository'
+import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsers.repository'
 import UserCreateService from '@modules/accounts/useCases/User/Create/UserCreate.service'
 import SessionService from './Session.service'
 
-let fakeUserRepository: FakeUserRepository
+let fakeUsersRepository: FakeUsersRepository
 let sessionService: SessionService
 let userCreateService: UserCreateService
 
 describe('Session Service', () => {
   beforeEach(() => {
-    fakeUserRepository = new FakeUserRepository()
-    userCreateService = new UserCreateService(fakeUserRepository)
-    sessionService = new SessionService(fakeUserRepository)
+    fakeUsersRepository = new FakeUsersRepository()
+    userCreateService = new UserCreateService(fakeUsersRepository)
+    sessionService = new SessionService(fakeUsersRepository)
   })
 
   it('should be able to check if user is valid', async () => {
@@ -21,7 +21,6 @@ describe('Session Service', () => {
       name: Faker.name.firstName(),
       email: Faker.internet.email(),
       password: Faker.datatype.uuid(),
-      driver_license: '12345678',
       isAdmin: false
     }
 
@@ -51,8 +50,6 @@ describe('Session Service', () => {
       name: Faker.name.firstName(),
       email: Faker.internet.email(),
       password: Faker.datatype.uuid(),
-      driver_license: '12345678',
-      isAdmin: false
     }
 
     await userCreateService.execute(user)

@@ -4,7 +4,7 @@ import 'dotenv/config'
 import express from 'express'
 import { errors } from 'celebrate'
 
-import { routes } from '@shared/infra/http/routes'
+import routes from './routes'
 import '@shared/infra/typeorm'
 import '@shared/container'
 import routerError from '@shared/errors/RouterError'

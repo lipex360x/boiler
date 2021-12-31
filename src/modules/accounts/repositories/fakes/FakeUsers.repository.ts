@@ -1,23 +1,20 @@
-import { v4 as uuid } from 'uuid'
 import bcrypt from 'bcryptjs'
 
-import User from '@modules/accounts/infra/typeorm/entities/User'
-import IUserRepository, { CreateProps, FindByEmailProps, FindByIdProps } from '../interfaces/IUserRepository'
+import User from '@modules/accounts/infra/typeorm/entities/User.entity'
+import IUsers, { CreateProps, FindByEmailProps, FindByIdProps } from '@modules/accounts/repositories/interfaces/IUsers.interface'
 
-export default class FakeUserRepository implements IUserRepository {
+export default class FakeAccountsRepository implements IUsers {
   private repository: User[] = []
 
-  async create ({ name, email, password, isAdmin, driver_license }:CreateProps): Promise<User> {
+  async create ({ name, email, password, isAdmin = false }:CreateProps): Promise<User> {
     const user = new User()
     const passwordCrypted = await bcrypt.hash(password, 8)
 
     Object.assign(user, {
-      id: uuid(),
-      name,
-      email,
-      password: passwordCrypted,
+      name, 
+      email, 
+      password: passwordCrypted, 
       isAdmin,
-      driver_license,
       created_at: new Date(),
       updated_at: new Date()
     })

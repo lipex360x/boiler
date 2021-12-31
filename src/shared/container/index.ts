@@ -1,1 +1,1 @@
-// import '@modules/.../repositories'
+import '@modules/accounts/repositories'
