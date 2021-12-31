@@ -17,6 +17,18 @@ module.exports = {
 
     {
       type: 'input',
+      name: 'apiPort',
+      message: 'API Port',
+      validate: (value) => {
+        if (!value) {
+          return 'Value is required'
+        }
+        return true
+      }
+    },
+
+    {
+      type: 'input',
       name: 'dbUser',
       message: 'Postgres user name',
       validate: (value) => {
