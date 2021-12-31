@@ -1,0 +1,20 @@
+import {{pascalCase entityName}} from '@modules/{{camelCase moduleName}}/infra/typeorm/entities/{{pascalCase entityName}}.entity'
+import I{{pascalTableName}}, { CreateProps } from '@modules/{{camelCase moduleName}}/repositories/interfaces/I{{pascalTableName}}.interface'
+
+export default class Fake{{pascalCase moduleName}}Repository implements I{{pascalTableName}} {
+  private repository: {{pascalCase entityName}}[] = []
+
+  async create ({ data }:CreateProps): Promise<{{pascalCase entityName}}> {
+    const {{camelCase entityName}} = new {{pascalCase entityName}}()
+
+    Object.assign({{camelCase entityName}}, {
+      data,
+      created_at: new Date(),
+      updated_at: new Date()
+    })
+
+    this.repository.push({{camelCase entityName}})
+
+    return {{camelCase entityName}}
+  }
+}
