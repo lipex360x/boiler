@@ -1,0 +1,7 @@
+import './CsvProvider/containers/Csv.container'
+import './DateProvider/containers/Date.container'
+import './HashProvider/containers/Hash.container'
+import './StorageProvider/containers/Storage.container'
+import './MailTemplateProvider/containers/MailTemplate.container'
+import './MailProvider/containers/Mail.container'
+import './CacheProvider/containers/Cache.container'

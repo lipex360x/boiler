@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-/* eslint-disable eqeqeq */
+/* eslint-disable */
+const { capitalize, pascalCase } = require('../_utils/textTransform')
+const get = require('../_utils/fileSystem')
 
-const { capitalize, textToPascal } = require('../_utils/textTransform')
-const getModules = require('../_utils/getModules')
-
-const modules = getModules('./src/modules')
+const modules = get('./src/modules', 'folder')
 
 module.exports = {
-  description: 'Generate a useCases',
+  description: 'Generate a useCases (TypeORM)',
 
   prompts: [
     {
@@ -70,7 +67,7 @@ module.exports = {
   ],
 
   actions: (data) => {
-    const pascalTableName = textToPascal(data.tableName)
+    const pascalTableName = pascalCase(data.tableName)
     const pathTemplate = './modules/templates'
 
     const files = [
@@ -111,7 +108,7 @@ module.exports = {
         path: `${file.path}/${file.name}`,
         data: file.data,
         templateFile: `${pathTemplate}/${file.template}`,
-        force: true
+        // force: true
       }
 
       action.push(createFile)

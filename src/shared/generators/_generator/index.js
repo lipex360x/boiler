@@ -8,7 +8,6 @@ module.exports = {
       type: 'input',
       name: 'name',
       message: 'Generator Name',
-      default: 'teste',
       validate: (value) => {
         if (!value) {
           return 'Value is required'
@@ -28,7 +27,7 @@ module.exports = {
         path: './{{lowerCase name}}',
         name: 'index.js',
         template: 'index.hbs',
-        force: true
+        force: false
       },
 
       {
@@ -36,7 +35,7 @@ module.exports = {
         path: './{{lowerCase name}}/templates',
         name: '{{lowerCase name}}.hbs',
         template: 'template.hbs',
-        force: true
+        force: false
       }
     ]
 
@@ -50,6 +49,7 @@ module.exports = {
         data: file.data,
         templateFile: `${pathTemplate}/${file.template}`,
         force: !!file.force
+        // force: true
       }
 
       action.push(createFile)

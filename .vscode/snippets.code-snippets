@@ -1,0 +1,417 @@
+{
+	"Template Snippets": {
+    "prefix": "snippetTemplate",
+    "body": [
+      "\"${1:SNIPPET_TITLE}\": {",
+      "  \"prefix\": \"${2:PREFIX}\",",
+      "  \"body\": [",
+      "    \"${3:BODY}\"",
+      "  ]",
+      "},",
+      "",
+    ]
+  },
+
+	"Swagger Route": {
+		"prefix": "swaggerPath",
+		"body": [
+        "\"/${1:routeName}\": {",
+        "  \"${2|get,post,put,path,delete|}\": {",
+        "    \"tags\": [\"${3:tagName}\"], ",
+        "    \"summary\": \"${4:summaryDescription}\",",
+        "    \"description\": \"${5:description}\",",
+        "    \"requestBody\": {",
+        "      \"content\": {",
+        "        \"$ref\": \"#/definitions/${3:tagName}/${6:Service}\"",
+        "      }",
+        "    },",
+        "    \"responses\": {",
+        "      \"201\": {",
+        "        \"description\": \"${6:Service}\"",
+        "      },",
+        "      \"500\": {",
+        "        \"description\": \"${3:tagName} already exists!\"",
+        "      }",
+        "    }",
+        "  }",
+        "}",
+		]
+	},
+
+  "Swagger Definitions": {
+    "prefix": "swaggerDef",
+    "body": [
+      "\"${tagName}\": {",
+        "  \"${Service}\": {",
+        "    \"application/json\": {",
+        "      \"schema\": {",
+        "        \"type\": \"object\",",
+        "        \"properties\": {",
+        "          \"name\": {",
+        "            \"type\": \"string\"",
+        "          },",
+        "          \"description\": {",
+        "            \"type\": \"string\"",
+        "          }",
+        "        },",
+        "        \"example\": {",
+        "          \"name\": \"Name Sample\",",
+        "          \"description\": \"Description Sample\"",
+        "        }",
+        "      }",
+        "    }",
+        "  }",
+        "}",
+    ]
+  },
+  
+	"Swagger Verbs": {
+		"prefix": "swaggerVerbs",
+		"body": [
+				"  \"${1|get,post,put,path,delete|}\": {",
+				"    \"tags\": [\"${2:tagName}\"],",
+				"    \"summary\": \"${3:summaryDescription}\",",
+				"    \"description\": \"${4:description}\",",
+				"    \"requestBody\": {",
+				"      \"content\": {",
+				"        \"application/json\" :{",
+				"          \"schema\":  {",
+				"            \"type\": \"object\",",
+				"            ",
+				"            \"properties\": {",
+				"              \"${5:propertyName}\": {",
+				"                \"type\": \"${6|string,integer,number,boolean|}\"",
+				"              }",
+				"            },",
+				"",
+				"            \"example\": {",
+				"              \"${7:propertyName}\": \"${8:propertySample}\"",
+				"            }",
+				"",
+				"          }",
+				"        }",
+				"      }",
+				"    },",
+				"  \"responses\": {",
+				"      \"201\": {          ",
+				"        \"description\": \"Created\"",
+				"      }",
+				"    }",
+				"  }",
+		]
+	},
+
+  "Table FK Template": {
+    "prefix": "tableFkTemplate",
+    "body": [
+      "{",
+      "  name: '${1:FkName}',",
+      "  columnNames: ['${2:LocalTableColumn}'],",
+      "",
+      "  referencedTableName: '${3:tableRef}',",
+      "  referencedColumnNames: ['${4:idTableRef}'],",
+      "",
+      "  onDelete: 'SET NULL',",
+      "  onUpdate: 'SET NULL'",
+      "}",
+    ]
+  },
+  
+
+  "Entity Template": {
+    "prefix": "entityTemplate",
+    "body": [
+    "import { v4 as uuid } from 'uuid'",
+    "import {",
+    "  Entity,",
+    "  Column,",
+    "  PrimaryColumn,",
+    "  CreateDateColumn,",
+    "  UpdateDateColumn,",
+    "  DeleteDateColumn",
+    "} from 'typeorm'",
+    "",
+    "@Entity('${TM_FILENAME_BASE/(.*)/${1:/downcase}/}s')",
+    "export default class $TM_FILENAME_BASE {",
+    "  @PrimaryColumn('uuid')",
+    "    id: string;",
+    "",
+    "  @Column()",
+    "    name: string;",
+    "",
+    "  @CreateDateColumn()",
+    "    created_at: Date;",
+    "",
+    "  @UpdateDateColumn()",
+    "    updated_at: Date;",
+    "",
+    "  @DeleteDateColumn()",
+    "    deleted_at: Date;",
+    "",
+    "  constructor() {",
+    "    if (!this.id) this.id = uuid()",
+    "  }",
+    "}",
+    "",
+    ]
+  },
+
+  "Schema Template": {
+    "prefix": "schemaTemplate",
+    "body": [
+      "import mongoose, { Document, Schema, Model } from 'mongoose'",
+      "",
+      "export interface ${1:SCHEMA_NAME}Attributes {",
+      "  _id?: string",
+      "  content: string",
+      "}",
+      "",
+      "export type ${1:SCHEMA_NAME}Document = Document & ${1:SCHEMA_NAME}Attributes;",
+      "",
+      "type ${1:SCHEMA_NAME}Model = Model<${1:SCHEMA_NAME}Document>;",
+      "",
+      "const ${1:SCHEMA_NAME}Schema = new Schema(",
+      "  {",
+      "    content: {",
+      "      type: String,",
+      "      trim: true,",
+      "      required: true",
+      "    }",
+      "",
+      "  },",
+      "",
+      "  { timestamps: true }",
+      ")",
+      "",
+      "export default mongoose.model<${1:SCHEMA_NAME}Document, ${1:SCHEMA_NAME}Model>('${1:SCHEMA_NAME}', ${1:SCHEMA_NAME}Schema)",
+      ""
+    ]
+  },
+  
+
+  "Many to One Relations": {
+    "prefix": "manyToOneTemplate",
+    "body": [
+      "@ManyToOne(() => ${1:ENTITY})",
+      "@JoinColumn({ name: '${2:table_name}_id' })",
+      "  ${2:table_name}: ${1:ENTITY}",
+      "",
+    ]
+  },
+
+  "One to Many Relations": {
+    "prefix": "oneToManyTemplate",
+    "body": [
+      "@OneToMany(() => ${1:ENTITY})",
+      "@JoinColumn({ name: '${2:table_name}_id' })",
+      "  ${2:table_name}: ${1:ENTITY}[]",
+      "",
+    ]
+  },
+
+  "Many to Many Relations": {
+    "prefix": "manyToManyTemplate",
+    "body": [
+      "@ManyToMany(() => ${1:ENTITY})",
+      "@JoinTable({",
+      "  name: '${2:table_MtM_name}',",
+      "  joinColumns: [{ name: '${3:this_id_MtM}' }],",
+      "  inverseJoinColumns: [{ name: '${4:entity_MtM_name}_id' }]",
+      "",
+      "})",
+      "  ${1:ENTITY}SS: ${1:ENTITY}[]",
+      "",
+    ]
+  },
+
+  "Factory TypeORM Template": {
+    "prefix": "factoryTemplate",
+    "body": [
+      "import Faker from 'faker'",
+      "import { define } from 'typeorm-seeding'",
+      "import ENTITYXXXXX from '@modules/'",
+      "",
+      "define(ENTITY, (faker: typeof Faker, context: { roles: string[] }) => {",
+      "  const dateCreate = new Date()",
+      "  const ENTITYXXXXX = new ENTITY()",
+      "",
+      "   Object.assign(ENTITY, {",
+      "    _id: faker.datatype.uuid(),",
+      "    property: faker.lorem.word,",
+      "    created_at: dateCreate,",
+      "    updated_at: dateCreate,",
+      "  })",
+      "",
+      "  return ENTITYXXXXX",
+      "})",
+    ]
+  },
+
+
+  "Interface Template": {
+    "prefix": "interfaceTemplate",
+    "body": [
+      "// import ENTITY from '@modules/'",
+      "",
+      "export interface CreateProps {",
+      "  ${1:PROP}: ${2:TYPE}",
+      "}",
+      "",
+      "export default interface $TM_FILENAME_BASE {",
+      "  create(data: CreateProps): Promise<ENTITY>",
+      "}",
+      "",
+    ]
+  },
+
+  "Fake Repository Template": {
+    "prefix": "fakeRepositoryTemplate",
+    "body": [
+      "import { v4 as uuid } from 'uuid'",
+      "",
+      "import ENTITY from '@modules/${1:module}'",
+      "import INTERFACE_REPOSITORY , { CreateProps } from '../interfaces/'",
+      "",
+      "export default class $TM_FILENAME_BASE implements INTERFACE_REPOSITORY {",
+      "  private repository: ENTITY[] = []",
+      "",
+      "  async create ({ props }:CreateProps): Promise<ENTITY> {",
+      "    const entity_data = new ENTITY()",
+      "",
+      "    Object.assign(entity_data, {",
+      "       OBJECT_ID: uuid(),",
+      "       props,",
+      "       created_at: new Date(),",
+      "       updated_at: new Date()",
+      "     })",
+      "",
+      "    this.repository.push(entity_data)",
+      "",
+      "    return entity_data",
+      "  }",
+      "}",
+      "",
+    ]
+  },
+
+  "Repository Template": {
+    "prefix": "repositoryTemplate",
+    "body": [
+      "import { Repository, getRepository } from 'typeorm'",
+      "",
+      "import ENTITY from '../entities/${1:ENTITY}'",
+      "import INTERFACE_REPOSITORY from '@modules/${2:INTERFACE_REPOSITORY}'",
+      "",
+      "export default class $TM_FILENAME_BASE implements INTERFACE_REPOSITORY {",
+      "  private repository: Repository<ENTITY>",
+      "",
+      "  constructor () {",
+      "    this.repository = getRepository(ENTITY)",
+      "  }",
+      "",
+      "  // Repositories Methods",
+      "",
+      "}",
+    ]
+  },
+
+      
+  "Index Container Template": {
+    "prefix": "containerTemplate",
+    "body": [
+      "import { container } from 'tsyringe'",
+      "",
+      "import INTERFACE from './interfaces/'",
+      "import REPOSITORY from '@modules/'",
+      "",
+      "const providers = {",
+      "  ${1:nameProvider}: REPOSITORY",
+      "}",
+      "",
+      "container.registerSingleton<INTERFACE>(",
+      "  'REPOSITORY',",
+      "  providers.${1:nameProvider}",
+      ")",
+      "",
+    ]
+  },
+
+  "Router Template": {
+    "prefix": "routerTemplate",
+    "body": [
+      "import { Router } from 'express'",
+      "",
+      "import CONTROLLER_NAME from '@modules/'",
+      "",
+      "const router = Router()",
+      "",
+      "const controllerInstance = new CONTROLLER_NAME()",
+      "",
+      "router.${1|get,post,put,patch,delete|}('/', controllerInstance.handle)",
+      "",
+      "export default router",
+      ""
+    ]
+  },
+
+  "Test Spec Template": {
+    "prefix": "testTemplate",
+    "body": [
+      "import AppError from '@shared/errors/AppError'",
+      "import Faker from 'faker'",
+      "",
+      "import FAKE_REPOSITORY from '@modules/'",
+      "import SERVICE_NAME from './'",
+      "",
+      "let fakeRepository: FAKE_REPOSITORY",
+      "let serviceName: SERVICE_NAME",
+      "",
+      "describe('${1:TEST_NAME}', () => {",
+      "  beforeEach(() => {",
+      "    fakeRepository = new FAKE_REPOSITORY()",
+      "    serviceName = new SERVICE_NAME(fakeRepository)",
+      "  })",
+      "",
+      "  it('should be able to ', async () => {",
+      "",
+      "",
+      "  })",
+      "",
+      "})",
+      "",
+    ]
+  },
+
+  "Plop Files Template": {
+    "prefix": "plopFilesTemplate",
+    "body": [
+      "arrayFiles.push({",
+      "  data: {},",
+      "  path: '../../xxx',",
+      "  name: 'fileName.ts',",
+      "  template: 'teste.hbs',",
+      "  force: false",
+      "})",
+    ]
+  },
+
+  "Plop Prompt Template": {
+    "prefix": "plopPromptTemplate",
+    "body": [
+      "{",
+      "  type: 'input',",
+      "  name: '${1:NAME}',",
+      "  message: '${2:Text}',",
+      "  default: 'Default_Value',",
+      "  validate: (value) => {",
+      "    if (!value) {",
+      "      return 'Value is required'",
+      "    }",
+      "    return true",
+      "  }",
+      "}"
+    ]
+  },
+  
+	
+}
