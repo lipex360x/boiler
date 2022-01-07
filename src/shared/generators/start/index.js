@@ -1,4 +1,4 @@
-const { generateId } = require('../_utils/textTransform')
+const { generateId, camelCase } = require('../_utils/textTransform')
 
 module.exports = {
   description: 'Start Project (Just once)',
@@ -71,10 +71,10 @@ module.exports = {
         path: '../../../.env',
         data: {
           jwtToken: generateId(16),
-          jwtExpires: '15m',
+          jwtExpires: '30m',
           refreshToken: generateId(12),
           refreshExpires: '7d',
-          projectMail: 'noreply@{{camelCase projectName}}.com'
+          projectMail: `noreply@${camelCase(data.projectName)}.com`
         },
         templateFile: './start/templates/env.hbs'
       }
