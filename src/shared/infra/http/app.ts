@@ -12,12 +12,12 @@ import typeorm from '@shared/infra/typeorm'
 import mongodb from '@shared/infra/mongoose'
 import '@shared/containers'
 import '@shared/providers'
-import rateLimiter from '@shared/middlewares/rateLimiter'
+// import rateLimiter from '@shared/middlewares/rateLimiter'
 
 const app = express()
 
 app.use(cors())
-app.use(rateLimiter)
+// app.use(rateLimiter)
 app.use(express.json())
 
 app.use(routes)
