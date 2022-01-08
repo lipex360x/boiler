@@ -116,7 +116,6 @@ module.exports = {
     })
 
     // Message
-    console.log('hello useCase')
     const message = () => (`UseCase ${capitalize(data.moduleName)}/${capitalize(data.useCaseName)}/${capitalize(data.actionName)} created`)
     action.push(message)
 

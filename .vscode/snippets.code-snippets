@@ -370,9 +370,9 @@
     "body": [
       "arrayFiles.push({",
       "  data: {},",
-      "  path: '../../xxx',",
-      "  name: 'fileName.ts',",
-      "  template: 'teste.hbs',",
+      "  path: `\\${generatePath}/xxxx`,",
+      "  name: '${1:fileName}.ts',",
+      "  template: '${2:templateName}.hbs',",
       "  force: false",
       "})",
     ]
