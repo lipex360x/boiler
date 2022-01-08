@@ -55,7 +55,7 @@ export default class UserCreateService {
 
     await this.notificationsRepository.create({
       user_id: user.id,
-      content: `New user created. Name ${user.name}`
+      content: `User ${user.name} Created`
     })
 
     const response: Response = {

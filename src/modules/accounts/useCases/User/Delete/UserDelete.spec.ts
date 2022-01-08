@@ -5,17 +5,25 @@ import Faker from 'faker'
 import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsers.repository'
 import UserDeleteService from './UserDelete.service'
 import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotifications.repository'
 
 let fakeCacheProvider: FakeCacheProvider
 let fakeUsersRepository: FakeUsersRepository
 let userDeleteService: UserDeleteService
+let fakeNotificationsRepository: FakeNotificationsRepository
 
 describe('Accounts User Delete', () => {
   beforeEach(() => {
     fakeCacheProvider = new FakeCacheProvider()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
+
     fakeUsersRepository = new FakeUsersRepository()
 
-    userDeleteService = new UserDeleteService(fakeCacheProvider, fakeUsersRepository)
+    userDeleteService = new UserDeleteService(
+      fakeCacheProvider,
+      fakeNotificationsRepository,
+      fakeUsersRepository
+    )
   })
 
   it('should not be able to Delete a invalid user', async () => {
