@@ -7,17 +7,12 @@ import IHash from '@shared/providers/HashProvider/interface/IHash.interface'
 import ICache from '@shared/providers/CacheProvider/interface/ICache.interface'
 import INotitications from '@modules/notifications/repositories/interfaces/INotifications.interface'
 
+import UserMap from '@modules/accounts/mapper/User.map'
+
 interface Request{
   name: string
   email: string
   password: string
-  isAdmin?: boolean
-}
-
-interface Response {
-  id: string
-  name: string
-  email: string
   isAdmin?: boolean
 }
 
@@ -37,7 +32,7 @@ export default class UserCreateService {
     private repository: IUser
   ) {}
 
-  async execute ({ name, email, password, isAdmin }: Request): Promise<Response> {
+  async execute ({ name, email, password, isAdmin }: Request): Promise<UserMap> {
     const getUser = await this.repository.findByEmail({ email })
 
     if (getUser) throw new AppError('This user is already exists')
@@ -58,13 +53,6 @@ export default class UserCreateService {
       content: `User ${user.name} Created`
     })
 
-    const response: Response = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin
-    }
-
-    return response
+    return UserMap.one(user)
   }
 }
