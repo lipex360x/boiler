@@ -6,17 +6,20 @@ import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsers.
 import FakeHashProvider from '@shared/providers/HashProvider/fakes/FakeHash.provider'
 
 import UserCreateService from './UserCreate.service'
+import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
 
 let fakeUsersRepository: FakeUsersRepository
 let fakeHashProvider: FakeHashProvider
 let userCreateService: UserCreateService
+let fakeCacheProvider: FakeCacheProvider
 
 describe('UserCreateService ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()
-
+    fakeCacheProvider = new FakeCacheProvider()
     fakeUsersRepository = new FakeUsersRepository()
-    userCreateService = new UserCreateService(fakeHashProvider, fakeUsersRepository)
+
+    userCreateService = new UserCreateService(fakeHashProvider, fakeCacheProvider, fakeUsersRepository)
   })
 
   it('should not be able to create a duplicate user', async () => {

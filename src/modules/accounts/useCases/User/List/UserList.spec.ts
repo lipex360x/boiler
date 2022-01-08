@@ -3,14 +3,17 @@ import Faker from 'faker'
 
 import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsers.repository'
 import UserListService from './UserList.service'
+import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
 
 let fakeUsersRepository: FakeUsersRepository
 let userListService: UserListService
+let fakeCacheProvider: FakeCacheProvider
 
 describe('Accounts User List', () => {
   beforeEach(() => {
+    fakeCacheProvider = new FakeCacheProvider()
     fakeUsersRepository = new FakeUsersRepository()
-    userListService = new UserListService(fakeUsersRepository)
+    userListService = new UserListService(fakeCacheProvider, fakeUsersRepository)
   })
 
   it('should be able to List All Users', async () => {

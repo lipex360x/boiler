@@ -3,6 +3,7 @@ import AppError from '@shared/errors/AppError'
 
 import IUser from '@modules/accounts/repositories/interfaces/IUsers.interface'
 import IHash from '@shared/providers/HashProvider/interface/IHash.interface'
+import ICache from '@shared/providers/CacheProvider/interface/ICache.interface'
 
 interface Request{
   name: string
@@ -24,6 +25,9 @@ export default class UserCreateService {
     @inject('HashProvider')
     private hashProvider: IHash,
 
+    @inject('CacheProvider')
+    private cacheProvider: ICache,
+
     @inject('UsersRepository')
     private repository: IUser
   ) {}
@@ -41,6 +45,8 @@ export default class UserCreateService {
       password: hashedPassword,
       isAdmin
     })
+
+    await this.cacheProvider.deleteKey({ key: 'users-list' })
 
     const response: Response = {
       id: user.id,

@@ -9,26 +9,35 @@ import FakeUserRepository from '@modules/accounts/repositories/fakes/FakeUsers.r
 import FakeTokensRepository from '@modules/tokens/repositories/fakes/FakeTokens.repository'
 import FakeHashProvider from '@shared/providers/HashProvider/fakes/FakeHash.provider'
 import FakeDateProvider from '@shared/providers/DateProvider/fakes/FakeDate.provider'
+import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
 
 let fakeUserRepository: FakeUserRepository
 let fakeTokensRepository: FakeTokensRepository
 let userLoginService: UserLoginService
 
 let userCreateService: UserCreateService
-let hashProvider: FakeHashProvider
-let dateProvider: FakeDateProvider
+let fakeHashProvider: FakeHashProvider
+let fakeCacheProvider: FakeCacheProvider
+let fakeDateProvider: FakeDateProvider
 
 describe('Session Service', () => {
   beforeEach(() => {
-    dateProvider = new FakeDateProvider()
-    hashProvider = new FakeHashProvider()
+    fakeDateProvider = new FakeDateProvider()
+    fakeCacheProvider = new FakeCacheProvider()
+    fakeHashProvider = new FakeHashProvider()
+
     fakeUserRepository = new FakeUserRepository()
     fakeTokensRepository = new FakeTokensRepository()
 
-    userCreateService = new UserCreateService(hashProvider, fakeUserRepository)
+    userCreateService = new UserCreateService(
+      fakeHashProvider,
+      fakeCacheProvider,
+      fakeUserRepository
+    )
+
     userLoginService = new UserLoginService(
-      hashProvider,
-      dateProvider,
+      fakeHashProvider,
+      fakeDateProvider,
       fakeTokensRepository,
       fakeUserRepository
     )
