@@ -5,6 +5,7 @@ import AppError from '@shared/errors/AppError'
 import IUser from '@modules/accounts/repositories/interfaces/IUsers.interface'
 import IHash from '@shared/providers/HashProvider/interface/IHash.interface'
 import ICache from '@shared/providers/CacheProvider/interface/ICache.interface'
+import INotitications from '@modules/notifications/repositories/interfaces/INotifications.interface'
 
 interface Request{
   name: string
@@ -29,6 +30,9 @@ export default class UserCreateService {
     @inject('CacheProvider')
     private cacheProvider: ICache,
 
+    @inject('NotificationsRepository')
+    private notificationsRepository: INotitications,
+
     @inject('UsersRepository')
     private repository: IUser
   ) {}
@@ -48,6 +52,11 @@ export default class UserCreateService {
     })
 
     await this.cacheProvider.deleteKey({ key: 'users-list' })
+
+    await this.notificationsRepository.create({
+      user_id: user.id,
+      content: `New user created. Name ${user.name}`
+    })
 
     const response: Response = {
       id: user.id,

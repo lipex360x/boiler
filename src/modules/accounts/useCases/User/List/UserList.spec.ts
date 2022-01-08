@@ -30,7 +30,9 @@ describe('Accounts User List', () => {
     })
 
     const users = await userListService.execute()
+    const cache = await fakeCacheProvider.findByKey<[]>({ key: 'users-list' })
 
     expect(users.length).toBe(2)
+    expect(cache.length).toBe(2)
   })
 })

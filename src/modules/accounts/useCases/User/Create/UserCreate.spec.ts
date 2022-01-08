@@ -7,19 +7,28 @@ import FakeHashProvider from '@shared/providers/HashProvider/fakes/FakeHash.prov
 
 import UserCreateService from './UserCreate.service'
 import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotifications.repository'
 
 let fakeUsersRepository: FakeUsersRepository
 let fakeHashProvider: FakeHashProvider
 let userCreateService: UserCreateService
 let fakeCacheProvider: FakeCacheProvider
+let fakeNotificationsRepository: FakeNotificationsRepository
 
 describe('UserCreateService ', () => {
   beforeEach(() => {
     fakeHashProvider = new FakeHashProvider()
     fakeCacheProvider = new FakeCacheProvider()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
+
     fakeUsersRepository = new FakeUsersRepository()
 
-    userCreateService = new UserCreateService(fakeHashProvider, fakeCacheProvider, fakeUsersRepository)
+    userCreateService = new UserCreateService(
+      fakeHashProvider,
+      fakeCacheProvider,
+      fakeNotificationsRepository,
+      fakeUsersRepository
+    )
   })
 
   it('should not be able to create a duplicate user', async () => {
@@ -44,9 +53,12 @@ describe('UserCreateService ', () => {
     }
 
     const generateHash = jest.spyOn(fakeHashProvider, 'generateHash')
+
     const createUser = await userCreateService.execute(user)
+    const notifications = await fakeNotificationsRepository.findAll()
 
     expect(createUser).toHaveProperty('id')
     expect(generateHash).toHaveBeenCalledWith(user.password)
+    expect(notifications.length).toBe(1)
   })
 })

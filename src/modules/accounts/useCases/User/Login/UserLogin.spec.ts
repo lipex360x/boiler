@@ -10,6 +10,7 @@ import FakeTokensRepository from '@modules/tokens/repositories/fakes/FakeTokens.
 import FakeHashProvider from '@shared/providers/HashProvider/fakes/FakeHash.provider'
 import FakeDateProvider from '@shared/providers/DateProvider/fakes/FakeDate.provider'
 import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotifications.repository'
 
 let fakeUserRepository: FakeUserRepository
 let fakeTokensRepository: FakeTokensRepository
@@ -19,12 +20,14 @@ let userCreateService: UserCreateService
 let fakeHashProvider: FakeHashProvider
 let fakeCacheProvider: FakeCacheProvider
 let fakeDateProvider: FakeDateProvider
+let fakeNotificationsRepository: FakeNotificationsRepository
 
 describe('Session Service', () => {
   beforeEach(() => {
     fakeDateProvider = new FakeDateProvider()
     fakeCacheProvider = new FakeCacheProvider()
     fakeHashProvider = new FakeHashProvider()
+    fakeNotificationsRepository = new FakeNotificationsRepository()
 
     fakeUserRepository = new FakeUserRepository()
     fakeTokensRepository = new FakeTokensRepository()
@@ -32,6 +35,7 @@ describe('Session Service', () => {
     userCreateService = new UserCreateService(
       fakeHashProvider,
       fakeCacheProvider,
+      fakeNotificationsRepository,
       fakeUserRepository
     )
 
