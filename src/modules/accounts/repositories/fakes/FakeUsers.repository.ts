@@ -4,7 +4,7 @@ import IUsers, { CreateProps, DeleteProps, FindByEmailProps, FindByIdProps, Upda
 export default class FakeUsersRepository implements IUsers {
   private repository: User[] = []
 
-  async create ({ name, email, password, isAdmin }:CreateProps): Promise<User> {
+  async create ({ name, email, password, isAdmin = false }:CreateProps): Promise<User> {
     const user = new User()
 
     Object.assign(user, {
