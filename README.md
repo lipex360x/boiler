@@ -31,7 +31,7 @@ PostgreSQL  | 5432 | bitnami/postgresql:latest
 MongoDB  | 27017 | bitnami/mongodb:latest
 Redis  | 6379 | redis:alpine
 
-<small>To more information, please consult `docker-compose.yml` in root path</small>
+To more information, please consult `docker-compose.yml` in root path
 
 ---
 
