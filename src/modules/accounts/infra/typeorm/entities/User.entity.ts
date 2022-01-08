@@ -31,18 +31,6 @@ export default class User {
   @Column({ nullable: true })
     avatar: string
 
-  @Expose({ name: 'avatar_url' })
-  avatar_url (): string {
-    switch (process.env.DISK_STORAGE) {
-      case 'local':
-        return `${process.env.API_URL}:${process.env.API_PORT}/files/${this.avatar}`
-      case 'S3':
-        return `${process.env.AWS_S3_BUCKET_URL}/${this.avatar}`
-      default:
-        return null
-    }
-  }
-
   @CreateDateColumn()
     created_at: Date
 
@@ -54,5 +42,17 @@ export default class User {
 
   constructor () {
     if (!this.id) this.id = uuid()
+  }
+
+  @Expose({ name: 'avatar_url' })
+  avatar_url (): string {
+    switch (process.env.DISK_STORAGE) {
+      case 'local':
+        return `${process.env.API_URL}:${process.env.API_PORT}/files/${this.avatar}`
+      case 'S3':
+        return `${process.env.AWS_S3_BUCKET_URL}/${this.avatar}`
+      default:
+        return null
+    }
   }
 }
