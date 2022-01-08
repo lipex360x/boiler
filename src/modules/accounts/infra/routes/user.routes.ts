@@ -11,6 +11,7 @@ import UserDeleteController from '@modules/accounts/useCases/User/Delete/UserDel
 import UserUpdateController from '@modules/accounts/useCases/User/Update/UserUpdate.controller'
 
 import { multerConfig } from '@shared/config/files'
+import UserProfileController from '@modules/accounts/useCases/User/Profile/UserProfile.controller'
 
 const router = Router()
 
@@ -19,6 +20,7 @@ const createUserController = new CreateUserController()
 const userListController = new UserListController()
 const userDeleteController = new UserDeleteController()
 const userUpdateController = new UserUpdateController()
+const userProfileController = new UserProfileController()
 
 const upload = multer(multerConfig())
 
@@ -27,6 +29,7 @@ router.post('/', createUserController.handle)
 router.use(sessionMiddleware)
 router.patch('/avatar', upload.single('avatar'), userUpdateAvatarController.handle)
 router.post('/update/:user_id', userUpdateController.handle)
+router.get('/profile', userProfileController.handle)
 
 router.use(sessionMiddleware)
 router.use(adminMiddleware)
