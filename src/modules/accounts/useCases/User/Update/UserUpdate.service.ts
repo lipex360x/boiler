@@ -1,7 +1,8 @@
 import { inject, injectable } from 'tsyringe'
 import AppError from '@shared/errors/AppError'
 
-import User from '@modules/accounts/infra/typeorm/entities/User.entity'
+import UserMap from '@modules/accounts/mapper/User.map'
+
 import IUsers from '@modules/accounts/repositories/interfaces/IUsers.interface'
 import IHash from '@shared/providers/HashProvider/interface/IHash.interface'
 import ICache from '@shared/providers/CacheProvider/interface/ICache.interface'
@@ -26,10 +27,10 @@ export default class UserUpdateService {
     private repository: IUsers
   ) {}
 
-  async execute ({ user_id, name, email, password }: Request): Promise<User> {
+  async execute ({ user_id, name, email, password }: Request): Promise<UserMap> {
     const user = await this.repository.findById({ id: user_id })
 
-    if (!user) throw new AppError('App Error')
+    if (!user) throw new AppError('User not Found')
 
     const findUserByEmail = await this.repository.findByEmail({ email })
 
@@ -41,6 +42,8 @@ export default class UserUpdateService {
 
     await this.cacheProvider.deleteKey({ key: 'users-list' })
 
-    return this.repository.update({ user })
+    const updatedUser = await this.repository.update({ user })
+
+    return UserMap.one(updatedUser)
   }
 }

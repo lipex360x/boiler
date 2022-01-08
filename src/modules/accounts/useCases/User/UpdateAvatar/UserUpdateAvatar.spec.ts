@@ -4,16 +4,25 @@ import FakeUserRepository from '@modules/accounts/repositories/fakes/FakeUsers.r
 import FakeStorageProvider from '@shared/providers/StorageProvider/fakes/FakeStorage.provider'
 import UserUpdateAvatarService from './UserUpdateAvatar.service'
 import AppError from '@shared/errors/AppError'
+import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCache.provider'
 
 let fakeUserRepository: FakeUserRepository
 let userUpdateAvatarService: UserUpdateAvatarService
 let storageProvider: FakeStorageProvider
+let fakeCacheProvider: FakeCacheProvider
 
 describe('Accounts UpdateAvatar', () => {
   beforeEach(() => {
     storageProvider = new FakeStorageProvider()
+    fakeCacheProvider = new FakeCacheProvider()
+
     fakeUserRepository = new FakeUserRepository()
-    userUpdateAvatarService = new UserUpdateAvatarService(storageProvider, fakeUserRepository)
+
+    userUpdateAvatarService = new UserUpdateAvatarService(
+      storageProvider,
+      fakeCacheProvider,
+      fakeUserRepository
+    )
   })
 
   it('should not be able to update a invalid user', async () => {

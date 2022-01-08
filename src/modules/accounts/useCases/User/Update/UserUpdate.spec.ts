@@ -81,9 +81,9 @@ describe('Accounts User Update', () => {
 
     expect(updatedAllUser).toEqual(
       expect.objectContaining({
+        id: user.id,
         name: 'John Doe',
-        email: 'mail@mail.com',
-        password: '112233'
+        email: 'mail@mail.com'
       })
     )
 
@@ -101,7 +101,7 @@ describe('Accounts User Update', () => {
 
     expect(updatedUserPassword).toEqual(
       expect.objectContaining({
-        password: '112233'
+        id: user.id
       })
     )
   })

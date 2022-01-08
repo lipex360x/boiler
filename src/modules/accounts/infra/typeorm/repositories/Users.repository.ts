@@ -30,7 +30,7 @@ export default class UsersRepository implements IUsers {
   async update ({ user } : UpdateProps): Promise<User> {
     let findUser = await this.repository.findOne(user.id)
 
-    findUser = { ...user }
+    findUser = { ...user } as User
 
     await this.repository.save(findUser)
 

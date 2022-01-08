@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe'
 import IUsers from '@modules/accounts/repositories/interfaces/IUsers.interface'
 import IStorageProvider from '@shared/providers/StorageProvider/interface/IStorage.interface'
 import AppError from '@shared/errors/AppError'
+import ICache from '@shared/providers/CacheProvider/interface/ICache.interface'
 
 interface Request {
   user_id: string
@@ -20,6 +21,9 @@ export default class UserUpdateAvatarService {
     @inject('StorageProvider')
     private storageProvider: IStorageProvider,
 
+    @inject('CacheProvider')
+    private cacheProvider: ICache,
+
     @inject('UsersRepository')
     private repository: IUsers
   ) {}
@@ -35,7 +39,9 @@ export default class UserUpdateAvatarService {
 
     user.avatar = fileName
 
-    await this.repository.create(user)
+    await this.repository.update({ user })
+
+    await this.cacheProvider.deleteKey({ key: 'users-list' })
 
     const response = {
       avatar_file,
