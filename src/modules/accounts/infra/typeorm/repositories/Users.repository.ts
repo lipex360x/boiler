@@ -2,6 +2,7 @@ import { Repository, getRepository } from 'typeorm'
 
 import User from '@modules/accounts/infra/typeorm/entities/User.entity'
 import IUsers, { CreateProps, FindByEmailProps, FindByIdProps, UpdateProps } from '@modules/accounts/repositories/interfaces/IUsers.interface'
+import { DeleteProps } from '@modules/tokens/repositories/interfaces/ITokens.interface'
 
 export default class UsersRepository implements IUsers {
   private repository: Repository<User>
@@ -40,5 +41,13 @@ export default class UsersRepository implements IUsers {
     const findUser = this.repository.findOne({ email })
 
     return findUser
+  }
+
+  async delete ({ id }: DeleteProps): Promise<User> {
+    const token = await this.repository.findOne({ id })
+
+    await this.repository.delete(id)
+
+    return token
   }
 }

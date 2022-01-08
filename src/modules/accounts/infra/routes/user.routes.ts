@@ -7,6 +7,7 @@ import adminMiddleware from '@shared/middlewares/admin'
 import CreateUserController from '@modules/accounts/useCases/User/Create/UserCreate.controller'
 import UserUpdateAvatarController from '@modules/accounts/useCases/User/UpdateAvatar/UserUpdateAvatar.controller'
 import UserListController from '@modules/accounts/useCases/User/List/UserList.controller'
+import UserDeleteController from '@modules/accounts/useCases/User/Delete/UserDelete.controller'
 
 import { multerConfig } from '@shared/config/files'
 
@@ -15,6 +16,7 @@ const router = Router()
 const userUpdateAvatarController = new UserUpdateAvatarController()
 const createUserController = new CreateUserController()
 const userListController = new UserListController()
+const userDeleteController = new UserDeleteController()
 
 const upload = multer(multerConfig())
 
@@ -26,5 +28,6 @@ router.patch('/avatar', upload.single('avatar'), userUpdateAvatarController.hand
 router.use(sessionMiddleware)
 router.use(adminMiddleware)
 router.get('/list', userListController.handle)
+router.delete('/delete', userDeleteController.handle)
 
 export default router

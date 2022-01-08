@@ -1,5 +1,5 @@
 import User from '@modules/accounts/infra/typeorm/entities/User.entity'
-import IUsers, { CreateProps, FindByEmailProps, FindByIdProps, UpdateProps } from '../interfaces/IUsers.interface'
+import IUsers, { CreateProps, DeleteProps, FindByEmailProps, FindByIdProps, UpdateProps } from '../interfaces/IUsers.interface'
 
 export default class FakeUsersRepository implements IUsers {
   private repository: User[] = []
@@ -42,5 +42,13 @@ export default class FakeUsersRepository implements IUsers {
     const getUser = this.repository.find(user => user.email === email)
 
     return getUser
+  }
+
+  async delete ({ id }: DeleteProps): Promise<User> {
+    const token = this.repository.find(repo => repo.id === id)
+
+    this.repository = this.repository.filter(repo => repo.id !== id)
+
+    return token
   }
 }

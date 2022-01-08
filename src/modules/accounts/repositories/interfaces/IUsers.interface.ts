@@ -21,10 +21,15 @@ export interface FindByIdProps {
   id: string
 }
 
+export interface DeleteProps {
+  id: string
+}
+
 export default interface IUsers {
   create(data: CreateProps): Promise<User>
   update(data: UpdateProps): Promise<User>
   findById(data: FindByIdProps): Promise<User>
   findAll(): Promise<User[]>
   findByEmail(data: FindByEmailProps): Promise<User>
+  delete(data: DeleteProps): Promise<User>
 }
