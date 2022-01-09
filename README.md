@@ -23,6 +23,15 @@
 
 ---
 
+### Insomnia Collection
+
+File Import
+
+  * Json File: `src/shared/utils/insomnia.json`
+  * URL:`https://raw.githubusercontent.com/lipex360x/gen-api-boilerplate/master/src/shared/utils/insomnia.json`
+
+---
+
 ### Databases available via docker-compose
 
 Database  | Port | Docker Image
@@ -39,8 +48,13 @@ To more information, please consult `docker-compose.yml` in root path
 
 Starts with `yarn` command (ex.: `yarn dev`)
 
+##### Automatic Generate
+  * `gen`: Start Plop Generate
+
 ##### API command
-  * `dev`: initialize API
+  * `dev`: initialize API in develop mode (TS Files)
+  * `build`: build app to deploy
+  * `start`: initialize API in production mode (JS files)
 
 ##### Jest tests
   * `test`: run Unit Tests
