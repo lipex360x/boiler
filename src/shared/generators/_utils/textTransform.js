@@ -7,9 +7,7 @@ const capitalize = (word) => {
 }
 
 const pascalCase = (word) => {
-  const pascal = word.replace(/([-_ ]\w)/g, text => text[1].toUpperCase())
-
-  return capitalize(pascal)
+  return word.replace(/([-_ ]\w)/g, text => text[1].toUpperCase())
 }
 
 const camelCase = (word) => {
