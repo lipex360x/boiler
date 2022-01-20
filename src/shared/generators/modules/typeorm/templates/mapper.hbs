@@ -4,6 +4,9 @@ import {{pascalCase entityName}} from '@modules/{{camelCase moduleName}}/infra/t
 
 interface Response {
   data: string
+  created_at: Date
+  updated_at: Date
+  deleted_at: Date
 }
 
 export default class {{pascalCase entityName}}Map {
@@ -11,10 +14,10 @@ export default class {{pascalCase entityName}}Map {
     return instanceToInstance({ data })
   }
 
-  static list ({{camelCase entityName}}: {{pascalCase entityName}}[]): Response {
+  static list ({{camelCase entityName}}: {{pascalCase entityName}}[]): Response[] {
     const {{camelCase entityName}}List:Response[] = []
 
-    for (const user of users) {
+    for (const {{camelCase entityName}} of {{camelCase entityName}}List) {
       {{camelCase entityName}}List.push({
         data: {{camelCase entityName}}.prop
       })
