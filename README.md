@@ -17,9 +17,10 @@
 
   1. Install all dependencies: `yarn`
   2. Generate Startup files: `yarn gen Start`
-  3. Execute ORM Migrations: `yarn orm:run`
-  4. Create Admin User: `yarn seed:run`
-  5. Start API REST: `yarn dev`
+  3. Initialize Docker: `docker-compose up -d`
+  4. Execute ORM Migrations: `yarn orm:run`
+  5. Create Admin User: `yarn seed:run`
+  6. Start API REST: `yarn dev`
 
 ---
 
