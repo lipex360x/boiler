@@ -1,3 +1,5 @@
+<h2 align="center">Express API Boilerplate</h2>
+
 ### Recommended Operating System
   * Linux Ubuntu
   * Apple OS X
